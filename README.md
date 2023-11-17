@@ -80,5 +80,3 @@ O programa opera em um loop infinito (`while True`) que permite ao usuário real
 4. Repita conforme necessário até escolher a opção 'Q' para sair.
 
 ---
-
-**Fim da Documentação**
