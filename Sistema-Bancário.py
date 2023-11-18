@@ -15,6 +15,35 @@ deposito = 0.00
 saldo = 0.00
 extrato= ""
 
+cpf_usuarios = ()
+lista_usuarios=[]
+
+
+def novo_usuario(lista_usuarios, cpf_usuarios):
+    usuario={
+        "nome":"",
+        "data_nascimento":"",
+        "cpf":"",
+        "endereço": {"logradouro":"", "bairro":"", "cidade":"", "estado":""},
+        "senha":" "
+    }
+
+    usuario["nome"]=input("Insira seu Nome: ")
+    usuario["cpf"]= input("Insira seu CPF: ")
+    usuario["data_nascimento"]=input("Insira sua Data de Nascimento (DD/MM/YY): ")
+    usuario["endereço"]["logradouro"] = input("Insira o seu Logradouro: ")
+    usuario["endereço"]["bairro"] = input("Insira o seu Bairro: ")
+    usuario["enereço"]["cidade"] = input("Insira sua Cidade: ")
+    usuario["endereço"]["estado"] = input("Insira a sigla do seu Estado: ")
+    usuario["senha"] = input("Insira uma senha: ")
+
+    for cpf in cpf_usuarios:
+        if cpf == usuario[cpf]:
+            return print ("Já existe um usuário com esse cpf")
+        
+    return print("Usuario criado com sucesso!"), lista_usuarios.add(usuario),cpf_usuarios.add(usuario[cpf])
+
+
 def sacar(saldo = 0 ,saque_diario = 0,LIMITE_SAQUE_DIARIO=0, extrato = " " ,LIMITE_POR_SAQUE=" "):
 
     if( saque_diario>=LIMITE_SAQUE_DIARIO):
