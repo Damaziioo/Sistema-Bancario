@@ -46,10 +46,14 @@ menu_interno_contas= """
 
 cpf_usuarios = ()
 lista_usuarios=[]
-lista_contas=[]
 numero_conta = 1
 agencia = "0001"
 
+def listar_contas(usuario):
+    if len(usuario["contas"]) > 0:
+        for conta in usuario["contas"]:
+    else:
+        print("Você não possui contas registratas.")
 
 def nova_conta(usuario):
 
