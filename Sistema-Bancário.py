@@ -58,7 +58,8 @@ def listar_contas(usuario):
 
 def nova_conta(usuario):
 
-    global agencia, lista_contas, numero_conta
+    global agencia, numero_conta
+
     conta={
         "agencia":agencia,
         "numero_conta":numero_conta,
@@ -76,7 +77,24 @@ def nova_conta(usuario):
 
     return print("Conta criada com sucesso!")
 
+def fechar_conta(usuario):
 
+    if len(usuario["contas"]) > 0:
+
+        fechar_conta = input("Insira a conta a ser fechada:")
+
+        for conta in usuario["contas"]:
+            if conta["numero_conta"] == fechar_conta:
+                
+                escolha = input("Cancelando a conta você perder todo o saldo, tem certeza? (s/n)").lower()
+                if escolha == "s":
+                    usuario["contas"].pop(conta)
+                else: 
+                    print("Operação cancelada")
+            print("Conta cancelada com sucesso!")
+        else:
+            print("Você não possui contas registratas.")
+    
 def login():
     global lista_usuarios
     if not len(lista_usuarios) == 0:
@@ -130,7 +148,6 @@ def novo_usuario(lista_usuarios, cpf_usuarios):
         
     return print("Usuario criado com sucesso!"), lista_usuarios.add(usuario),cpf_usuarios.add(usuario["CPF"])
 
-
 def sacar(saldo = 0 ,saque_diario = 0,LIMITE_SAQUE_DIARIO=0, extrato = " " ,LIMITE_POR_SAQUE=" "):
 
     if( saque_diario>=LIMITE_SAQUE_DIARIO):
@@ -153,7 +170,6 @@ def sacar(saldo = 0 ,saque_diario = 0,LIMITE_SAQUE_DIARIO=0, extrato = " " ,LIMI
             saque_diario += 1
             extrato.join(f"Saque: R$ {valor_saque:.2f} \n")
             return print(f"\nValor de R$ {valor_saque:.2f} sacado com sucesso!"), saldo, saque_diario, extrato
-
 
 def depositar(saldo, lista_extrato):
 
@@ -179,7 +195,7 @@ def menu_interno(usuario):
     LIMITE_SAQUE_DIARIO = usuario["LIMITE_SAQUE_DIARIO"]
     LIMITE_POR_SAQUE= usuario[""]
     limite_diario = usuario[""]
-    saldo = 0.00
+    saldo = usuario["saldo"]
     extrato= ""
     
     
@@ -215,7 +231,7 @@ def menu_interno_contas(usuario):
         elif opcao =="n":
             nova_conta(usuario)
         elif opcao =="f":
-            fechar_conta()
+            fechar_conta(usuario)
         elif opcao=="q":
             break
         else:
