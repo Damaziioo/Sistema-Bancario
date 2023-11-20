@@ -1,4 +1,4 @@
-menu_interno = """ 
+menu_interno_txt = """ 
 =======================================
     
                 MENU
@@ -13,7 +13,7 @@ menu_interno = """
 
 =>"""
 
-menu_externo = """ 
+menu_externo_txt = """ 
 =======================================
     
     SEJA BEM VINDO AO BANCO DAMAZIO
@@ -52,6 +52,7 @@ agencia = "0001"
 def listar_contas(usuario):
     if len(usuario["contas"]) > 0:
         for conta in usuario["contas"]:
+           print(conta["numero_conta"]) 
     else:
         print("Você não possui contas registratas.")
 
@@ -90,6 +91,17 @@ def login(lista_usuarios):
     else:
         print("Não há usuários cadastrados!")
     
+    return print("Operacao falhou!")
+
+def acessar_conta(usuario):
+    acessar_conta= input("Insira a conta que deseja acessar: ")
+    if len(usuario["contas"]) > 0:
+        for conta in usuario["contas"]:
+           if acessar_conta == conta:
+               login()
+    else:
+        print("Você não possui contas registratas.")
+            
     return print("Operacao falhou!")
 
 def novo_usuario(lista_usuarios, cpf_usuarios):
@@ -171,7 +183,7 @@ def menu_interno(usuario):
     
     
     while True:
-        opcao = input(menu_interno).lower()
+        opcao = input(menu_interno_txt).lower()
 
         if opcao=="d": #Deposito
             
@@ -196,7 +208,7 @@ def menu_interno_contas(usuario):
         opcao= input(menu_interno_contas).lower()
 
         if opcao == "a":
-            login_conta()
+            acessar_conta(usuario)
         elif opcao =="l":
             listar_contas(usuario)
         elif opcao =="n":
@@ -210,7 +222,7 @@ def menu_interno_contas(usuario):
 
 def menu_externo():
     while True:
-        opcao= input(menu_externo).lower()
+        opcao= input(menu_externo_txt).lower()
 
         if opcao == "l":
             login(lista_usuarios)
