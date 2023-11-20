@@ -44,7 +44,7 @@ menu_interno_contas_txt= """
 =>"""
 
 
-cpf_usuarios = ()
+cpf_usuarios = set()
 lista_usuarios=[]
 numero_conta = 1
 agencia = "0001"
@@ -52,9 +52,9 @@ agencia = "0001"
 def listar_contas(usuario):
     if len(usuario["contas"]) > 0:
         for conta in usuario["contas"]:
-           print(conta["numero_conta"]) 
+           print(f"Número da conta:{conta['numero_conta']}") 
     else:
-        print("Você não possui contas registratas.")
+        print("Operação falhou. Você não possui contas registratas.")
 
 def nova_conta(usuario):
 
@@ -65,10 +65,10 @@ def nova_conta(usuario):
         "numero_conta":numero_conta,
         "usuario":usuario,
         "extrato":"",
-        "LIMITE_POR_SAQUE":500.00,
-        "LIMITE_SAQUE_DIARIO":3,
+        "limite_por_saque":500.00,
+        "limite_saque_diario":3,
         "saldo":0.00,
-        "limite_diario":0
+        "limite_diario_conta":0
     }
 
     usuario["contas"].append(conta)
@@ -92,8 +92,8 @@ def fechar_conta(usuario):
                 else: 
                     print("Operação cancelada")
             print("Conta cancelada com sucesso!")
-        else:
-            print("Você não possui contas registratas.")
+    else:
+        print("Você não possui contas registratas.")
     
 def login():
     global lista_usuarios
@@ -103,7 +103,7 @@ def login():
 
     
         for usuario in lista_usuarios:
-            if cpf == usuario["cpf"] and senha==usuario["senha"]:
+            if cpf == usuario["CPF"] and senha==usuario["senha"]:
                 return  menu_interno_contas(usuario)
             else:
                 print("Usuario nao encontrado ou senha informada nao confere!")
@@ -113,11 +113,14 @@ def login():
     return print("Operacao falhou!")
 
 def acessar_conta(usuario):
-    acessar_conta= input("Insira a conta que deseja acessar: ")
     if len(usuario["contas"]) > 0:
+
+        acessar_conta= int(input("Insira a conta que deseja acessar: "))
+
         for conta in usuario["contas"]:
-           if acessar_conta == conta:
-               menu_interno(usuario)
+           if acessar_conta == conta["numero_conta"]:
+               menu_interno(conta)
+
     else:
         print("Você não possui contas registratas.")
             
@@ -129,14 +132,20 @@ def novo_usuario():
     usuario={
         "nome":"",
         "data_nascimento":"",
-        "cpf":"",
+        "CPF":"",
         "endereço": {"logradouro":"", "bairro":"", "cidade":"", "estado":""},
         "senha":" ",
-        "conta":()
+        "contas":[]
     }
 
     usuario["nome"]=input("Insira seu Nome: ")
     usuario["CPF"]= input("Insira seu CPF: ")
+
+    for cpf in cpf_usuarios:
+        if cpf == usuario["CPF"]:
+            return print ("Operação falhou. Já existe um usuário com esse cpf")
+        
+        
     usuario["data_nascimento"]=input("Insira sua Data de Nascimento (DD/MM/YY): ")
     usuario["endereço"]["logradouro"] = input("Insira o seu Logradouro: ")
     usuario["endereço"]["bairro"] = input("Insira o seu Bairro: ")
@@ -144,18 +153,17 @@ def novo_usuario():
     usuario["endereço"]["estado"] = input("Insira a sigla do seu Estado: ")
     usuario["senha"] = input("Insira uma senha: ")
 
-    for cpf in cpf_usuarios:
-        if cpf == usuario["CPF"]:
-            return print ("Já existe um usuário com esse cpf")
+    
         
     lista_usuarios.append(usuario)
-    cpf_usuarios.append(usuario["CPF"])
+    cpf_usuarios.add(usuario["CPF"])
         
     return print("Usuario criado com sucesso!")
 
-def sacar(saldo = 0 ,saque_diario = 0,LIMITE_SAQUE_DIARIO=0, extrato = " " ,LIMITE_POR_SAQUE=" "):
+def sacar(conta):
 
-    if( saque_diario>=LIMITE_SAQUE_DIARIO):
+
+    if( conta["limite_diario_conta"]>=conta["limite_saque_diario"]):
         return print("Você atingiu o limite de saques diários!")
     else:
 
@@ -164,67 +172,70 @@ def sacar(saldo = 0 ,saque_diario = 0,LIMITE_SAQUE_DIARIO=0, extrato = " " ,LIMI
         if valor_saque <= 0:
             return print("Operação falhou. Não é permitido sacar valores nulos ou negativos!")
             
-        elif valor_saque > LIMITE_POR_SAQUE:
-            return print(f"Operação falhou. Você ultrapassou o limite por saque, insira um valor abaixo de R$ {LIMITE_POR_SAQUE}!")
+        elif valor_saque > conta["limite_por_saque"]:
+            return print(f"Operação falhou. Você ultrapassou o limite por saque, insira um valor abaixo de R$ {conta['limite_por_saque']}!")
             
-        elif valor_saque > saldo:
+        elif valor_saque > conta["saldo"]:
           return  print("Operação falhou. Você não tem saldo suficiente.")
         else:
+            conta["saldo"] -= valor_saque
+            conta["limite_diario_conta"] += 1
+            conta["extrato"]+=(f"Saque: R$ {valor_saque:.2f} \n")
             print(f"\nValor de R$ {valor_saque:.2f} sacado com sucesso!")
-            saldo -= valor_saque
-            saque_diario += 1
-            extrato.join(f"Saque: R$ {valor_saque:.2f} \n")
-            return print(f"\nValor de R$ {valor_saque:.2f} sacado com sucesso!"), saldo, saque_diario, extrato
+            return  conta
 
-def depositar(saldo, lista_extrato):
+def depositar(conta):
 
     deposito=float(input("Insira o valor a ser depositado: "))
 
     if deposito > 0:
-        saldo+=deposito
-        lista_extrato.join(f"Deposito: R$ {deposito:.2f} \n")
+        conta["saldo"]+=deposito
+        conta["extrato"]+=(f"Deposito: R$ {deposito:.2f} \n")
         print(f"\n Valor de R$ {deposito:.2f} depositado com sucesso!")
+        return conta
     elif deposito<=0:
-        print("Não é permitido depositar valores nulos ou negativos!")
+        return print("Não é permitido depositar valores nulos ou negativos!")
     else:
-        print("Operação falhou!")
+       return print("Operação falhou!")
 
-def emitir_extrato(saldo,extrato=" "):
+def emitir_extrato(conta):
+
         print(" EXTRATO ".center(35,"="))
-        print("Não foram realizadas movimentações!" if not extrato else extrato)
-        print(f"Saldo: R$ {saldo:.2f}")
+        print("Não foram realizadas movimentações!" if not conta["extrato"] else conta["extrato"])
+        print(f"\nSaldo: R$ {conta['saldo']:.2f}\n")
         print('='*35)
+        return conta
 
 
-def menu_interno(usuario):
-    LIMITE_SAQUE_DIARIO = usuario["LIMITE_SAQUE_DIARIO"]
-    LIMITE_POR_SAQUE= usuario[""]
-    limite_diario = usuario[""]
-    saldo = usuario["saldo"]
-    extrato= ""
-    
-    
+def menu_interno(conta):
+    limite_saque_diario = conta.get('limite_saque_diario')
+    limite_por_saque = conta.get('limite_por_saque')
+    limite_diario = conta.get('limite_diario')
+    saldo = conta.get('saldo')
+    extrato = conta.get('extrato')
     while True:
+        
         opcao = input(menu_interno_txt).lower()
 
-        if opcao=="d": #Deposito
+        if opcao=='d': #Deposito
             
-            depositar(saldo, extrato)
+            depositar(conta)
                     
-        elif opcao == "s": #Saque
-            sacar(saldo,limite_diario, LIMITE_SAQUE_DIARIO, extrato,LIMITE_POR_SAQUE)
+        elif opcao == 's': #Saque
+            sacar(conta)
 
-        elif opcao == "e": #Extrato
+        elif opcao == 'e': #Extrato
 
-            emitir_extrato(saldo,extrato=extrato)
+            emitir_extrato(conta)
 
-        elif opcao == "q":
+        elif opcao == 'q':
 
             break
 
         else:
             print("\nOperação inválida, por favor selecione novamente a operação desejada.")
 
+    return conta
 def menu_interno_contas(usuario):
     while True:
         opcao= input(menu_interno_contas_txt).lower()
