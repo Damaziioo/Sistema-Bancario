@@ -1,9 +1,15 @@
-menu = f""" 
+menu_interno_texto = f""" 
+=======================================
+    
+                MENU
+
+=======================================
+
 
 [D] Depositar
 [S] Sacar
 [E] Extrato
-[Q] Sair
+[Q] Deslogar
 
 =>"""
 
@@ -15,8 +21,23 @@ deposito = 0.00
 saldo = 0.00
 extrato= ""
 
+menu_externo_texto = f""" 
+=======================================
+    
+    SEJA BEM VINDO AO BANCO DAMAZIO
+
+=======================================
+
+
+[L] Login
+[N] Novo Usuario
+[Q] Sair
+
+=>"""
+
 cpf_usuarios = ()
 lista_usuarios=[]
+
 
 
 def novo_usuario(lista_usuarios, cpf_usuarios):
@@ -25,7 +46,12 @@ def novo_usuario(lista_usuarios, cpf_usuarios):
         "data_nascimento":"",
         "cpf":"",
         "endereço": {"logradouro":"", "bairro":"", "cidade":"", "estado":""},
-        "senha":" "
+        "senha":" ",
+        "extrato":"",
+        "LIMITE_POR_SAQUE":500.00,
+        "LIMITE_SAQUE_DIARIO":3,
+        "limite_diario":0,
+        "saldo":0.00
     }
 
     usuario["nome"]=input("Insira seu Nome: ")
@@ -87,26 +113,47 @@ def emitir_extrato(saldo,extrato=" "):
         print(f"Saldo: R$ {saldo:.2f}")
         print('='*35)
 
-while True:
-    opcao = input(menu).lower()
 
-    if opcao=="d": #Deposito
-        
-        depositar(saldo, extrato)
-                
-    elif opcao == "s": #Saque
-        sacar(saldo,saque_diario, LIMITE_SAQUE_DIARIO, extrato )
+def menu_interno(usuario):
+    LIMITE_SAQUE_DIARIO = usuario["LIMITE_SAQUE_DIARIO"]
+    LIMITE_POR_SAQUE= usuario[""]
+    limite_diario = usuario[""]
+    saldo = 0.00
+    extrato= ""
+    
+    
+    while True:
+        opcao = input(menu_interno_texto).lower()
 
-    elif opcao == "e": #Extrato
+        if opcao=="d": #Deposito
+            
+            depositar(saldo, extrato)
+                    
+        elif opcao == "s": #Saque
+            sacar(saldo,limite_diario, LIMITE_SAQUE_DIARIO, extrato,LIMITE_POR_SAQUE)
 
-        emitir_extrato(saldo,extrato=extrato)
+        elif opcao == "e": #Extrato
 
-    elif opcao == "q":
+            emitir_extrato(saldo,extrato=extrato)
 
-        break
+        elif opcao == "q":
 
-    else:
-        print("\nOperação inválida, por favor selecione novamente a operação desejada.")
+            break
 
+        else:
+            print("\nOperação inválida, por favor selecione novamente a operação desejada.")
 
+def menu_externo():
+    while True:
+        opcao= input(menu_externo_texto).lower()
 
+        if opcao == "l":
+            print("login")
+        elif opcao =="n":
+            novo_usuario()
+        elif opcao=="q":
+            break
+        else:
+            print("\nOperação inválida, por favor selecione novamente a operação desejada.")
+
+menu_externo()
