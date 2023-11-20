@@ -64,7 +64,7 @@ def nova_conta(agencia,numero_conta, CPF,lista_contas):
     }
 
     for usuario in lista_usuarios:
-        if usuario["cpf"] == CPF:
+        if usuario["CPF"] == CPF:
              conta["usuario"] = usuario
         
     numero_conta+=numero_conta
@@ -103,7 +103,7 @@ def novo_usuario(lista_usuarios, cpf_usuarios):
     }
 
     usuario["nome"]=input("Insira seu Nome: ")
-    usuario["cpf"]= input("Insira seu CPF: ")
+    usuario["CPF"]= input("Insira seu CPF: ")
     usuario["data_nascimento"]=input("Insira sua Data de Nascimento (DD/MM/YY): ")
     usuario["endereço"]["logradouro"] = input("Insira o seu Logradouro: ")
     usuario["endereço"]["bairro"] = input("Insira o seu Bairro: ")
@@ -112,10 +112,10 @@ def novo_usuario(lista_usuarios, cpf_usuarios):
     usuario["senha"] = input("Insira uma senha: ")
 
     for cpf in cpf_usuarios:
-        if cpf == usuario[cpf]:
+        if cpf == usuario["CPF"]:
             return print ("Já existe um usuário com esse cpf")
         
-    return print("Usuario criado com sucesso!"), lista_usuarios.add(usuario),cpf_usuarios.add(usuario[cpf])
+    return print("Usuario criado com sucesso!"), lista_usuarios.add(usuario),cpf_usuarios.add(usuario["CPF"])
 
 
 def sacar(saldo = 0 ,saque_diario = 0,LIMITE_SAQUE_DIARIO=0, extrato = " " ,LIMITE_POR_SAQUE=" "):
