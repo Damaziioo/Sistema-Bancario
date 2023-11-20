@@ -71,7 +71,7 @@ def nova_conta(usuario):
         "limite_diario":0
     }
 
-    usuario["contas"].add(conta)
+    usuario["contas"].append(conta)
 
     numero_conta+=1
 
@@ -108,7 +108,7 @@ def login():
             else:
                 print("Usuario nao encontrado ou senha informada nao confere!")
     else:
-        print("Não há usuários cadastrados!")
+        print("\nNão há usuários cadastrados!")
     
     return print("Operacao falhou!")
 
@@ -123,7 +123,9 @@ def acessar_conta(usuario):
             
     return print("Operacao falhou!")
 
-def novo_usuario(lista_usuarios, cpf_usuarios):
+def novo_usuario():
+
+    global lista_usuarios, cpf_usuarios
     usuario={
         "nome":"",
         "data_nascimento":"",
@@ -138,7 +140,7 @@ def novo_usuario(lista_usuarios, cpf_usuarios):
     usuario["data_nascimento"]=input("Insira sua Data de Nascimento (DD/MM/YY): ")
     usuario["endereço"]["logradouro"] = input("Insira o seu Logradouro: ")
     usuario["endereço"]["bairro"] = input("Insira o seu Bairro: ")
-    usuario["enereço"]["cidade"] = input("Insira sua Cidade: ")
+    usuario["endereço"]["cidade"] = input("Insira sua Cidade: ")
     usuario["endereço"]["estado"] = input("Insira a sigla do seu Estado: ")
     usuario["senha"] = input("Insira uma senha: ")
 
@@ -146,7 +148,10 @@ def novo_usuario(lista_usuarios, cpf_usuarios):
         if cpf == usuario["CPF"]:
             return print ("Já existe um usuário com esse cpf")
         
-    return print("Usuario criado com sucesso!"), lista_usuarios.add(usuario),cpf_usuarios.add(usuario["CPF"])
+    lista_usuarios.append(usuario)
+    cpf_usuarios.append(usuario["CPF"])
+        
+    return print("Usuario criado com sucesso!")
 
 def sacar(saldo = 0 ,saque_diario = 0,LIMITE_SAQUE_DIARIO=0, extrato = " " ,LIMITE_POR_SAQUE=" "):
 
@@ -242,7 +247,7 @@ def menu_externo():
         opcao= input(menu_externo_txt).lower()
 
         if opcao == "l":
-            login(lista_usuarios)
+            login()
         elif opcao =="n":
             novo_usuario()
         elif opcao=="q":
