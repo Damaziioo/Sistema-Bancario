@@ -1,4 +1,4 @@
-menu_interno_texto = f""" 
+menu_interno = """ 
 =======================================
     
                 MENU
@@ -13,15 +13,7 @@ menu_interno_texto = f"""
 
 =>"""
 
-LIMITE_SAQUE_DIARIO = 3
-saque_diario= 0
-LIMITE_POR_SAQUE= 500.00
-saque = 0.00
-deposito = 0.00
-saldo = 0.00
-extrato= ""
-
-menu_externo_texto = f""" 
+menu_externo = """ 
 =======================================
     
     SEJA BEM VINDO AO BANCO DAMAZIO
@@ -35,10 +27,27 @@ menu_externo_texto = f"""
 
 =>"""
 
+menu_interno_contas= """ 
+=======================================
+    
+            MENU DE CONTAS
+
+=======================================
+
+
+[A] Acessar conta
+[N] Nova conta
+[L] Listar contas
+[F] Fechar conta
+[Q] Deslogar
+
+=>"""
+
+
 cpf_usuarios = ()
 lista_usuarios=[]
 lista_contas=[]
-conta = 1
+numero_conta = 1
 agencia = "0001"
 
 
@@ -162,7 +171,7 @@ def menu_interno(usuario):
     
     
     while True:
-        opcao = input(menu_interno_texto).lower()
+        opcao = input(menu_interno).lower()
 
         if opcao=="d": #Deposito
             
@@ -182,9 +191,26 @@ def menu_interno(usuario):
         else:
             print("\nOperação inválida, por favor selecione novamente a operação desejada.")
 
+def menu_interno_contas(usuario):
+    while True:
+        opcao= input(menu_interno_contas).lower()
+
+        if opcao == "a":
+            login_conta()
+        elif opcao =="l":
+            listar_contas(usuario)
+        elif opcao =="n":
+            nova_conta(agencia,numero_conta, usuario["CPF"],lista_contas)
+        elif opcao =="f":
+            fechar_conta()
+        elif opcao=="q":
+            break
+        else:
+            print("\nOperação inválida, por favor selecione novamente a operação desejada.")
+
 def menu_externo():
     while True:
-        opcao= input(menu_externo_texto).lower()
+        opcao= input(menu_externo).lower()
 
         if opcao == "l":
             login(lista_usuarios)
