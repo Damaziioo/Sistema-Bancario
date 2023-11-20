@@ -86,6 +86,7 @@ def fechar_conta(usuario):
         for conta in usuario["contas"]:
             if conta["numero_conta"] == fechar_conta:
                 
+
                 escolha = input("Cancelando a conta você perder todo o saldo, tem certeza? (s/n)").lower()
                 if escolha == "s":
                     usuario["contas"].pop(conta)
@@ -199,12 +200,14 @@ def depositar(conta):
        return print("Operação falhou!")
 
 def emitir_extrato(conta):
-
         print(" EXTRATO ".center(35,"="))
         print("Não foram realizadas movimentações!" if not conta["extrato"] else conta["extrato"])
         print(f"\nSaldo: R$ {conta['saldo']:.2f}\n")
         print('='*35)
+
         return conta
+        
+
 
 
 def menu_interno(conta):
