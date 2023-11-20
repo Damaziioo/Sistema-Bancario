@@ -37,6 +37,30 @@ menu_externo_texto = f"""
 
 cpf_usuarios = ()
 lista_usuarios=[]
+lista_contas=[]
+conta = 1
+agencia = "0001"
+
+
+def nova_conta(agencia,numero_conta, CPF,lista_contas):
+    conta={
+        "agencia":agencia,
+        "numero_conta":numero_conta,
+        "usuario":"",
+        "extrato":"",
+        "LIMITE_POR_SAQUE":500.00,
+        "LIMITE_SAQUE_DIARIO":3,
+        "saldo":0.00,
+        "limite_diario":0
+    }
+
+    for usuario in lista_usuarios:
+        if usuario["cpf"] == CPF:
+             conta["usuario"] = usuario
+        
+    numero_conta+=numero_conta
+
+    return print("Conta criada com sucesso!"), numero_conta, lista_contas.add(conta)
 
 
 def login(lista_usuarios):
