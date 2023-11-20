@@ -51,11 +51,13 @@ numero_conta = 1
 agencia = "0001"
 
 
-def nova_conta(agencia,numero_conta, CPF,lista_contas):
+def nova_conta(usuario):
+
+    global agencia, lista_contas, numero_conta
     conta={
         "agencia":agencia,
         "numero_conta":numero_conta,
-        "usuario":"",
+        "usuario":usuario,
         "extrato":"",
         "LIMITE_POR_SAQUE":500.00,
         "LIMITE_SAQUE_DIARIO":3,
@@ -63,13 +65,11 @@ def nova_conta(agencia,numero_conta, CPF,lista_contas):
         "limite_diario":0
     }
 
-    for usuario in lista_usuarios:
-        if usuario["CPF"] == CPF:
-             conta["usuario"] = usuario
-        
-    numero_conta+=numero_conta
+    usuario["contas"].add(conta)
 
-    return print("Conta criada com sucesso!"), numero_conta, lista_contas.add(conta)
+    numero_conta+=1
+
+    return print("Conta criada com sucesso!")
 
 
 def login(lista_usuarios):
@@ -95,11 +95,7 @@ def novo_usuario(lista_usuarios, cpf_usuarios):
         "cpf":"",
         "endereço": {"logradouro":"", "bairro":"", "cidade":"", "estado":""},
         "senha":" ",
-        "extrato":"",
-        "LIMITE_POR_SAQUE":500.00,
-        "LIMITE_SAQUE_DIARIO":3,
-        "limite_diario":0,
-        "saldo":0.00
+        "conta":()
     }
 
     usuario["nome"]=input("Insira seu Nome: ")
@@ -200,7 +196,7 @@ def menu_interno_contas(usuario):
         elif opcao =="l":
             listar_contas(usuario)
         elif opcao =="n":
-            nova_conta(agencia,numero_conta, usuario["CPF"],lista_contas)
+            nova_conta(usuario)
         elif opcao =="f":
             fechar_conta()
         elif opcao=="q":
