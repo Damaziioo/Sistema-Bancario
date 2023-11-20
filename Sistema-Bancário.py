@@ -27,7 +27,7 @@ menu_externo_txt = """
 
 =>"""
 
-menu_interno_contas= """ 
+menu_interno_contas_txt= """ 
 =======================================
     
             MENU DE CONTAS
@@ -77,7 +77,8 @@ def nova_conta(usuario):
     return print("Conta criada com sucesso!")
 
 
-def login(lista_usuarios):
+def login():
+    global lista_usuarios
     if not len(lista_usuarios) == 0:
         cpf = input("Insira seu CPF: ")
         senha = input("Insira sua senha: ")
@@ -85,7 +86,7 @@ def login(lista_usuarios):
     
         for usuario in lista_usuarios:
             if cpf == usuario["cpf"] and senha==usuario["senha"]:
-                return  menu_interno(usuario)
+                return  menu_interno_contas(usuario)
             else:
                 print("Usuario nao encontrado ou senha informada nao confere!")
     else:
@@ -98,7 +99,7 @@ def acessar_conta(usuario):
     if len(usuario["contas"]) > 0:
         for conta in usuario["contas"]:
            if acessar_conta == conta:
-               login()
+               menu_interno(usuario)
     else:
         print("Você não possui contas registratas.")
             
@@ -205,7 +206,7 @@ def menu_interno(usuario):
 
 def menu_interno_contas(usuario):
     while True:
-        opcao= input(menu_interno_contas).lower()
+        opcao= input(menu_interno_contas_txt).lower()
 
         if opcao == "a":
             acessar_conta(usuario)
