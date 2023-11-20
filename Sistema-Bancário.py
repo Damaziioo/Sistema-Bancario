@@ -39,6 +39,21 @@ cpf_usuarios = ()
 lista_usuarios=[]
 
 
+def login(lista_usuarios):
+    if not len(lista_usuarios) == 0:
+        cpf = input("Insira seu CPF: ")
+        senha = input("Insira sua senha: ")
+
+    
+        for usuario in lista_usuarios:
+            if cpf == usuario["cpf"] and senha==usuario["senha"]:
+                return  menu_interno(usuario)
+            else:
+                print("Usuario nao encontrado ou senha informada nao confere!")
+    else:
+        print("Não há usuários cadastrados!")
+    
+    return print("Operacao falhou!")
 
 def novo_usuario(lista_usuarios, cpf_usuarios):
     usuario={
@@ -148,7 +163,7 @@ def menu_externo():
         opcao= input(menu_externo_texto).lower()
 
         if opcao == "l":
-            print("login")
+            login(lista_usuarios)
         elif opcao =="n":
             novo_usuario()
         elif opcao=="q":
