@@ -73,11 +73,6 @@ def fechar_conta(usuario):
         fechar_conta = input("Insira a conta a ser fechada:")
         for conta in usuario["contas"]:
             if conta["numero_conta"] == fechar_conta:
-<<<<<<< Updated upstream
-                
-
-=======
->>>>>>> Stashed changes
                 escolha = input("Cancelando a conta você perder todo o saldo, tem certeza? (s/n)").lower()
                 if escolha == "s":
                     usuario["contas"].pop(conta)
