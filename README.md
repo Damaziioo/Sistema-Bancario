@@ -1,41 +1,30 @@
-# Sistema Bancario
- 
-**Documentação do Programa Bancário Simples**
+# Sistema Bancário - Documentação do Programa Bancário Simples
 
----
+Este programa em Python implementa um sistema bancário básico que permite aos usuários realizar operações como depósito, saque e visualização de extrato. O sistema é interativo e conta com funcionalidades de login, criação de usuários, acesso a contas, e operações bancárias.
 
-**Objetivo:**
+## Funcionalidades Principais
 
-O código a seguir implementa um programa bancário simples em Python, permitindo ao usuário realizar operações básicas como depósito, saque e visualização de extrato.
+### Menu Externo
 
----
+Ao iniciar o programa, os usuários são recebidos com um menu externo, oferecendo as seguintes opções:
 
-**Menu:**
-
-O programa apresenta um menu interativo com as seguintes opções:
-
-- [D] Depositar
-- [S] Sacar
-- [E] Extrato
+- [L] Login
+- [N] Novo Usuário
 - [Q] Sair
 
-O usuário pode selecionar a operação desejada digitando a letra correspondente.
+Os usuários podem selecionar as opções digitando a letra correspondente.
 
----
+### Menu Interno - Contas
 
-**Variáveis:**
+Após realizar o login ou criar um novo usuário, os usuários têm acesso a um menu interno de contas, incluindo as seguintes opções:
 
-- `LIMITE_SAQUE_DIARIO`: Define o número máximo de saques permitidos por dia.
-- `saque_diario`: Contador de saques diários.
-- `LIMITE_POR_SAQUE`: Define o limite máximo permitido por saque.
-- `saque`: Armazena o valor do saque inserido pelo usuário.
-- `deposito`: Armazena o valor do depósito inserido pelo usuário.
-- `saldo`: Armazena o saldo da conta.
-- `extrato`: Armazena o histórico de transações para exibição no extrato.
+- [A] Acessar Conta
+- [N] Nova Conta
+- [L] Listar Contas
+- [F] Fechar Conta
+- [Q] Deslogar
 
----
-
-**Operações:**
+### Operações Bancárias
 
 1. **Depósito (Opção 'D'):**
    - Solicita ao usuário inserir o valor a ser depositado.
@@ -56,27 +45,21 @@ O usuário pode selecionar a operação desejada digitando a letra correspondent
 4. **Sair (Opção 'Q'):**
    - Encerra o programa.
 
----
+## Contas e Usuários
 
-**Loop Principal:**
+- Cada usuário pode ter várias contas associadas.
+- As informações do usuário incluem nome, CPF, data de nascimento, endereço e senha.
+- Contas possuem informações como número da conta, agência, saldo, extrato e limites de saque.
 
-O programa opera em um loop infinito (`while True`) que permite ao usuário realizar várias operações consecutivas sem a necessidade de reiniciar o programa.
+## Observações
 
----
-
-**Observações:**
-
-- O código possui validações para garantir que o usuário insira valores válidos em depósitos e saques.
+- O programa possui validações para garantir que o usuário insira valores válidos em depósitos e saques.
 - Limites diários e máximos por saque são implementados para restringir certas operações.
 - O extrato é mantido e exibido ao usuário, mostrando todas as transações realizadas.
 
----
-
-**Instruções de Uso:**
+## Instruções de Uso
 
 1. Execute o programa.
-2. Selecione a operação desejada digitando a letra correspondente.
-3. Siga as instruções para cada operação.
+2. Selecione a opção desejada no menu externo.
+3. Siga as instruções para login, criação de usuário e operações bancárias.
 4. Repita conforme necessário até escolher a opção 'Q' para sair.
-
----
