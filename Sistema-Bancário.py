@@ -117,18 +117,40 @@ def novo_usuario():
         "senha":" ",
         "contas":[]
     }
-    usuario["nome"]=input("Insira seu Nome: ")
+    usuario["nome"]=input("Insira seu Nome: ") 
+    if usuario["nome"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
     usuario["CPF"]= input("Insira seu CPF: ")
-    for cpf in cpf_usuarios:
-        if cpf == usuario["CPF"]:
-            return print ("Operação falhou. Já existe um usuário com esse cpf")
+    if usuario["CPF"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
+    else:
+        for cpf in cpf_usuarios:
+            if cpf == usuario["CPF"]:
+                return print ("Operação falhou. Já existe um usuário com esse cpf")
         
     usuario["data_nascimento"]=input("Insira sua Data de Nascimento (DD/MM/YY): ")
+    if usuario["data_nascimento"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
+    
     usuario["endereço"]["logradouro"] = input("Insira o seu Logradouro: ")
+    if usuario["endereço"]["logradouro"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
+    
     usuario["endereço"]["bairro"] = input("Insira o seu Bairro: ")
+    if usuario["endereço"]["bairro"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
+    
     usuario["endereço"]["cidade"] = input("Insira sua Cidade: ")
+    if usuario["endereço"]["cidade"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
+    
     usuario["endereço"]["estado"] = input("Insira a sigla do seu Estado: ")
+    if usuario["endereço"]["estado"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
+    
     usuario["senha"] = input("Insira uma senha: ")
+    if usuario["senha"] == '':
+        return print("Operação falhou. Insira um valor não nulo")
 
     lista_usuarios.append(usuario)
     cpf_usuarios.add(usuario["CPF"])
@@ -173,8 +195,6 @@ def emitir_extrato(conta):
 
         return conta
         
-
-
 def menu_interno(conta):
     while True:
         opcao = input(menu_interno_txt).lower()
